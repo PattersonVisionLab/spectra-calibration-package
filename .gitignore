@@ -1,0 +1,10 @@
+*.asv
+*.m~
+
+dev
+test/output
+test/ColorCoverageReport
+
+test\ledcalibration.json
+test\measurement.json
+test\gammaramp.json

@@ -1,0 +1,1 @@
+Files here will not be covered by version control (if .txt or .json).
