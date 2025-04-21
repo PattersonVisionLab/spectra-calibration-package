@@ -9,7 +9,7 @@ classdef LedCalibrationTest < matlab.unittest.TestCase
         function methodSetup(testCase)
 
             testCase.DATA_PATH = fullfile(pattersonlab.core.color.util.getMainFolder(),...
-                "test", "data", "20250402_LEDSpectra");
+                "test", "data", "20250409_LEDSpectra");
             testCase.OBJECT = pattersonlab.core.color.io.loadMaxwellianViewSpectra(...
                 testCase.DATA_PATH, 5:-0.2:0, "20250402", 3.9, 0, "Token", "3LED", "OmittedValues", 4.4);
         end
