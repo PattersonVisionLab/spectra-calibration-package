@@ -73,6 +73,9 @@ classdef LedCalibration < handle
         % Misc parameters
         DEFAULT_HEADROOM  = 0.002;
         DARK_VALUES = [0 0 0];
+
+        % Update rate for MView stimuli (used only for plotting)
+        UPDATE_RATE = 500
     end
 
 
@@ -195,7 +198,6 @@ classdef LedCalibration < handle
             % Syntax:
             %   obj.runConeIsolation()
             % ---------------------------------------------------------
-            disp('Hello ------------------------')
             import patterson.core.color.lib.*
             names = {'L', 'M', 'S', 'LM', 'Isolum', 'Lum'};
             targets = {1, 2, 3, [1 2], [1 2], 1:4, 1:4};
@@ -244,7 +246,7 @@ classdef LedCalibration < handle
 
                 % Print results to command line
                 if obj.verbose
-                    fprintf('%s contrast: %s\n', names{i}, ...
+                    fprintf('\t%s contrast: %s\n', names{i}, ...
                         num2str(round(contrastReceptors(targets{i}),3)'));
                 end
 
@@ -288,8 +290,8 @@ classdef LedCalibration < handle
             ledScalars = scaledPowers ./ obj.ledPowers;
             cieCoords = obj.getCieCoords(scaledPowers);
 
-            if min(ledScalars) > 0.5
-                ledScalars = ledScalars/median(ledScalars)/2;
+            if max(ledScalars) > 0.5
+                ledScalars = ledScalars/max(ledScalars)/2;
             end
 
             fprintf('White Point fit: %.3f %.3f for values %.3f %.3f %.3f\n',...
@@ -304,8 +306,17 @@ classdef LedCalibration < handle
             xy = backgroundxyY(1:2)';
         end
 
-        function stim = calcStimulus(obj, whichStim, baseStim)
-            if isa(whichStim, 'sara.SpectralTypes')
+        function stim = calcStimulus(obj, baseStim, whichStim, opts)
+            arguments
+                obj
+                baseStim
+                whichStim = 'Lum'
+                opts.Plot         (1,1)    logical = true
+            end
+
+            if nargin < 3
+                whichStim = 'Lum';
+            elseif isa(whichStim, 'sara.SpectralTypes')
                 whichStim = whichStim.getAbbrev();
             end
 
@@ -322,6 +333,14 @@ classdef LedCalibration < handle
                     stim(i,:) = (dPower(i) .* ((1/baseStim(1)) * ...
                         (baseStim-baseStim(1))) + bkgdPower(i));
                 end
+            end
+
+            if opts.Plot
+                pattersonlab.core.color.util.ledPlot(stim,...
+                    (1:size(stim, 2))/obj.UPDATE_RATE);
+                xlabel('Time (sec)');
+                ylabel('Power (uW)');
+                tightfig(gcf);
             end
         end
     end

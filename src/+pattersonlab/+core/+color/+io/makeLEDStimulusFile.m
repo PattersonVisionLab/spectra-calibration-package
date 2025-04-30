@@ -35,6 +35,7 @@ function X = makeLEDStimulusFile(fName, X, lutFiles)
     assert(size(X, 2) == 3, 'X must be an [N x 3] matrix!');
 
     if isa(lutFiles, 'pattersonlab.core.color.LedCalibration')
+        obj = lutFiles;
         lutFiles = [...
             obj.RED.getFileName_LUT(),...
             obj.GREEN.getFileName_LUT(),...
@@ -73,4 +74,4 @@ function X = makeLEDStimulusFile(fName, X, lutFiles)
     fclose(fid);
 
     % Report to the command line
-    fprintf('\tCompleted %s\\%s\n', cd, fName);
+    fprintf('\tCompleted %s\\%s\n', fName);
