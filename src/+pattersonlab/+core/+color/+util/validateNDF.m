@@ -10,7 +10,7 @@ function [tf, spectra] = validateNDF(ndfName)
 
     filterDir = fullfile(pattersonlab.core.color.util.getMainFolder(), 'data');
 
-    fNames = deblank(string(ls(filterDir)));
+    fNames = getFolderFiles(filterDir);
     fNames = fNames(startsWith(fNames, "NE"));
 
     ndfName = erase(ndfName, ".txt");
