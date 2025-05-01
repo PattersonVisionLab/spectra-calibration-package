@@ -154,11 +154,11 @@ classdef LedCalibration < handle
             plot(obj.meanChromaticity(1), obj.meanChromaticity(2),...
                 'xk', 'MarkerSize', 10, 'LineWidth', 1, 'Tag', 'Bkgd',...
                 'DisplayName', 'White Point');
-            if all(ledScalars == 0)
+            %if all(ledScalars == 0)
                 pts = obj.getCieCoords(obj.ledPowers .* ledScalars);
                 plot(pts(1), pts(2), 'ok', 'MarkerSize', 10, 'LineWidth', 1,...
                     'DisplayName', 'Value');
-            end
+            %end
             xy1 = [obj.getCieCoords([obj.ledMeans(1) 0 0])];
             xy2 = [obj.getCieCoords([0 obj.ledMeans(2) 0])];
             xy3 = [obj.getCieCoords([0 0 obj.ledMeans(3)])];
