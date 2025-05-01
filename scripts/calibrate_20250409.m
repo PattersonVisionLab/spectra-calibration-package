@@ -9,7 +9,9 @@ plotFlag = true;
 calDate = "20250409";
 voltages = 5:-0.2:0;  % V
 beamDiameter = 3.9;   % mm
-ndf = 1;
+ndf = 1;              % O.D. of the neutral density filter
+% Set NDF to zero if using no filter or using measured values for the NDF
+% transmission rather than the published values from the manufacturer.
 
 [obj, redLED, greenLED, blueLED] = io.loadMaxwellianViewSpectra(...
     measurementFolder, voltages, calDate, beamDiameter, ndf, ...

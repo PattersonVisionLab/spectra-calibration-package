@@ -147,6 +147,16 @@ classdef GammaRampMeasurement < handle
             obj.refresh();
         end
 
+        function setMinWL(obj, minWL)
+            obj.importProps.MinWL = minWL;
+            obj.refresh();
+        end
+
+        function setMaxWL(obj, maxWL)
+            obj.importProps.MaxWL = maxWL;
+            obj.refresh();
+        end
+
         function refresh(obj)
             obj.importMeasurements();
         end

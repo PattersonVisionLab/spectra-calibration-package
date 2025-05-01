@@ -137,22 +137,34 @@ classdef LedCalibration < handle
 
     % Plotting methods
     methods
-        function ax = plotCIE(obj)
+        function ax = plotCIE(obj, ledScalars)
             % PLOTCIE
             %
             % Syntax:
             %   ax = obj.plotCIE()
             % ---------------------------------------------------------
+            arguments
+                obj
+                ledScalars (1,3) = [0,0,0]
+            end
+
             ax = axes('Parent', figure());
             plotChromaticity();
             hold on;
             plot(obj.meanChromaticity(1), obj.meanChromaticity(2),...
-                'xk', 'MarkerSize', 10, 'LineWidth', 1, 'Tag', 'Bkgd');
+                'xk', 'MarkerSize', 10, 'LineWidth', 1, 'Tag', 'Bkgd',...
+                'DisplayName', 'White Point');
+            if all(ledScalars == 0)
+                pts = obj.getCieCoords(obj.ledPowers .* ledScalars);
+                plot(pts(1), pts(2), 'ok', 'MarkerSize', 10, 'LineWidth', 1,...
+                    'DisplayName', 'Value');
+            end
             xy1 = [obj.getCieCoords([obj.ledMeans(1) 0 0])];
             xy2 = [obj.getCieCoords([0 obj.ledMeans(2) 0])];
             xy3 = [obj.getCieCoords([0 0 obj.ledMeans(3)])];
             plot([xy1(1) xy2(1) xy3(1) xy1(1)], [xy1(2) xy2(2) xy3(2) xy1(2)],...
-                'k--', 'LineWidth', 1, 'Marker', 'o', 'MarkerSize', 5, 'Tag', 'LEDs');
+                'k--', 'LineWidth', 1, 'Marker', 'o', 'MarkerSize', 5, ...
+                'Tag', 'Gamut', 'DisplayName', 'Gamut');
             figPos(gcf, 0.7, 0.7);
         end
     end

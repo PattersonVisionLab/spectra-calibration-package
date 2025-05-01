@@ -14,9 +14,20 @@ function [LED, R, G, B] = loadMaxwellianViewSpectra(folderName, values, calibrat
 %   GammaRampMeasurement, LedCalibration
 % --------------------------------------------------------------------------
 
-    if nargin < 5
-        ndf = 0;
-    end
+    % arguments
+    %     folderName      {mustBeFolder}
+    %     values     (1,:) {mustBeVector}
+    %     calibrationDate (1,1) string
+    %     beamDiameter (1,1) double 
+    %     ndf (1,1) double {mustBeNonnegative} = 0
+    %     opts.RedMinWL = 620
+    %     opts.RedMaxWL = 682
+    %     opts.GreenMinWL = 525
+    %     opts.GreenMaxWL = 560
+    %     opts.BlueMinWL = 410
+    %     opts.BlueMaxWL = 445
+    % end
+
 
     import pattersonlab.core.color.*;
 

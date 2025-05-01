@@ -10,7 +10,7 @@ function [data, fileNames] = loadSpectralMeasurementFiles(fPath, token)
         token           string      = ""
     end
 
-    fileNames = deblank(string(ls(fPath)));
+    fileNames = getFolderFiles(fPath);
     fileNames = fileNames(endsWith(fileNames, ".txt"));
     if token ~= ""
         fileNames = fileNames(contains(fileNames, token));
