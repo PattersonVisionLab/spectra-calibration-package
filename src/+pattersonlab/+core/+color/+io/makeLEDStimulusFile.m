@@ -54,11 +54,11 @@ function X = makeLEDStimulusFile(fName, X, lutFiles)
 
     % Add the LUT file names (note: this is an absolute path on imaging PC)
     fprintf(fid,...
-        'lut1 		= C:\\Users\\slo\\Stimuli\\LUTs\\%s\r\n', lutFiles(1));
+        'lut1 		= C:\\Users\\slo\\Documents\\Stimuli\\LUTs\\%s\r\n', lutFiles(1));
     fprintf(fid,...
-        'lut2 		= C:\\Users\\slo\\Stimuli\\LUTs\\%s\r\n', lutFiles(2));
+        'lut2 		= C:\\Users\\slo\\Documents\\Stimuli\\LUTs\\%s\r\n', lutFiles(2));
     fprintf(fid,...
-        'lut3 		= C:\\Users\\slo\\Stimuli\\LUTs\\%s\r\n', lutFiles(3));
+        'lut3 		= C:\\Users\\slo\\Documents\\Stimuli\\LUTs\\%s\r\n', lutFiles(3));
 
     fprintf(fid, 'interval_value	= 2\r\n');
     fprintf(fid, 'interval_unit	= ms\r\n');
