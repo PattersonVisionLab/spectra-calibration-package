@@ -157,6 +157,15 @@ classdef GammaRampMeasurement < handle
             obj.refresh();
         end
 
+        function setFitType(obj, fitType)
+            arguments
+                obj
+                fitType (1,1) string {mustBeMember(fitType, ["none", "linear", "poly8"])}
+            end
+
+            obj.lutFitType = fitType;
+        end
+
         function refresh(obj)
             obj.importMeasurements();
         end
@@ -225,7 +234,14 @@ classdef GammaRampMeasurement < handle
 
             [~, idx] = sort(targetValues);
 
-            T = table(targetValues(idx)', pwr(idx)',...
+            if isrow(targetValues)
+                targetValues = targetValues';
+            end
+            if isrow(pwr)
+                pwr = pwr';
+            end
+
+            T = table(targetValues(idx), pwr(idx),...
                 'VariableNames', {'Input', 'Power'});
             T = obj.fitLut(T, fitType, targetValues);
         end

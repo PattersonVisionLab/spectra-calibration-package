@@ -1,8 +1,8 @@
 
-import pattersonlab.core.color.*;
+import pattersonlab.core.*;
 
-measurementFolder = fullfile(util.getMainFolder(), 'test', 'data', '20250409_LEDSpectra');
-outputFolder = fullfile(util.getMainFolder(), 'output');
+measurementFolder = fullfile(color.util.getMainFolder(), 'test', 'data', '20250409_LEDSpectra');
+outputFolder = fullfile(color.util.getMainFolder(), 'output');
 
 plotFlag = true;
 
@@ -13,7 +13,7 @@ ndf = 1;              % O.D. of the neutral density filter
 % Set NDF to zero if using no filter or using measured values for the NDF
 % transmission rather than the published values from the manufacturer.
 
-[obj, redLED, greenLED, blueLED] = io.loadMaxwellianViewSpectra(...
+[obj, redLED, greenLED, blueLED] = color.io.loadMaxwellianViewSpectra(...
     measurementFolder, voltages, calDate, beamDiameter, ndf, ...
     "Token", "3LED", "OmittedValues", 4.4);
 
@@ -23,21 +23,29 @@ if plotFlag
     blueLED.plotSpectra("ShowCutoffs", true);
 end
 
+% Raw lookup tables
 if plotFlag
     redLED.plotLUT(voltages);
     greenLED.plotLUT(voltages);
     blueLED.plotLUT(voltages);
 end
 
+% Set the fits for each lookup table
+redLED.setFitType('linear');
+greenLED.setFitType('poly8');
+blueLED.setFitType('linear');
+
+% Plot again to see fitted LUTs
+if plotFlag
+    redLED.plotLUT(voltages);
+    greenLED.plotLUT(voltages);
+    blueLED.plotLUT(voltages);
+end
+
+% Write the lookup tables
 redLED.writeLUT(outputFolder, voltages, 'linear');
 greenLED.writeLUT(outputFolder, voltages, 'poly8');
 blueLED.writeLUT(outputFolder, voltages, 'linear');
-
-if plotFlag
-    redLED.plotLUT(voltages);
-    greenLED.plotLUT(voltages);
-    blueLED.plotLUT(voltages);
-end
 
 redLED.writeSpectra(outputFolder);
 greenLED.writeSpectra(outputFolder);
@@ -59,6 +67,6 @@ figure(); plot(0:0.002:2, stim); title('Normalized stimulus');
 
 ledValues = obj.calcStimulus(stim);
 fName = 'mystim.txt';
-io.makeLEDStimulusFile(fName, ledValues, obj);
+color.io.makeLEDStimulusFile(fName, ledValues, obj);
 % The stimulus file is saved in the output folder. Include a file path ahead
 % of the fName to save elsewhere.
