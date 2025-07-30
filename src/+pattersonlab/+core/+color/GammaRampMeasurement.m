@@ -280,6 +280,12 @@ classdef GammaRampMeasurement < handle
         end
 
         function writeSpectra(obj, savePath, targetValue, fName)
+            % WRITESPECTRA
+            %
+            % Description:
+            %   Write the spectra to a .txt file (for use in deprecated
+            %   calibration code, no longer necessary)
+            % -------------------------------------------------------------
             arguments
                 obj
                 savePath        (1,1)   string  {mustBeFolder} = obj.DEFAULT_OUTPUT_FOLDER
